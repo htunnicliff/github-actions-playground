@@ -1,0 +1,19 @@
+name: Primary
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  reused:
+    name: Say Hello
+    uses: ./.github/workflows/hello.yml
+
+  main:
+    runs-on: ubuntu-latest
+    needs: [reused]
+    steps:
+      - name: Run workflow
+        run: echo "Hello, World!"
+      - name: Use reusable workflow output
+        run: echo "Foo is ${{ needs.reused.outputs.foo }}"

@@ -1,0 +1,20 @@
+name: Hello
+
+on:
+  workflow_call:
+    outputs:
+      foo:
+        description: "It's 'foo'"
+        value: ${{ jobs.say-hello.outputs.foo }}
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    outputs:
+      foo: ${{ steps.out.outputs.foo }}
+    steps:
+      - name: Say Hello
+        run: echo "Hello, World!"
+      - name: Output
+        id: out
+        run: "echo 'foo=bar' >> $GITHUB_OUTPUT"
